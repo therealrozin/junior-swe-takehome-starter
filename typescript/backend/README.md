@@ -1,6 +1,6 @@
 # Backend API Starter (TypeScript)
 
-A minimal Node.js + Express + TypeScript starter for the CSC Junior SWE Take-Home Test.
+A minimal Node.js + Express + TypeScript starter for the Junior SWE Take-Home Test.
 
 ## Setup
 

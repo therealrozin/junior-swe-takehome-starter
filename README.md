@@ -85,7 +85,6 @@ See `frontend/README.md` for detailed feature descriptions.
 ## Directory Structure
 
 ```
-starters/
 ├── typescript/
 │   ├── backend/          # Node + Express + TypeScript
 │   └── frontend/         # React + Vite + TypeScript
@@ -123,12 +122,12 @@ const API_BASE = 'http://localhost:3000/api';
 
 ## Time Management
 
-The test is designed for ~1.5 hours. Here's a suggested breakdown:
+The test is designed for 2-3 hours. Here's a suggested breakdown:
 
-- **Setup & understanding** (10 min) - read the starters, understand the patterns
-- **Backend endpoints** (30 min) - implement POST, PATCH, DELETE, and tests
-- **Frontend features** (30 min) - search, filter, add product form
-- **Integration & polish** (20 min) - test together, fix issues, error handling
+- **Setup & understanding** (15 min) - read the starters, understand the patterns
+- **Backend endpoints** (45-60 min) - implement POST, PATCH, DELETE, and tests
+- **Frontend features** (45-60 min) - search, filter, add product form
+- **Integration & polish** (30 min) - test together, fix issues, error handling
 
 Don't worry if you go over. Focus on core functionality and clear thinking.
 

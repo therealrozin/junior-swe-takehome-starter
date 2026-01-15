@@ -1,6 +1,6 @@
 # Backend API Starter (JavaScript)
 
-A minimal Node.js + Express + JavaScript starter for the CSC Junior SWE Take-Home Test.
+A minimal Node.js + Express + JavaScript starter for the Junior SWE Take-Home Test.
 
 ## Setup
 

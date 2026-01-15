@@ -46,3 +46,6 @@ logs/
 
 # Optional eslint cache
 .eslintcache
+
+# Claude Code
+.claude/

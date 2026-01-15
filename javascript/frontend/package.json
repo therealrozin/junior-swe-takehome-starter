@@ -2,7 +2,7 @@
   "name": "products-ui-starter",
   "version": "1.0.0",
   "type": "module",
-  "description": "Frontend starter for CSC Junior SWE Take-Home Test (JavaScript)",
+  "description": "Frontend starter for Junior SWE Take-Home Test (JavaScript)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -2,7 +2,7 @@
   "name": "products-api-starter",
   "version": "1.0.0",
   "type": "module",
-  "description": "Backend starter for CSC Junior SWE Take-Home Test",
+  "description": "Backend starter for Junior SWE Take-Home Test",
   "engines": {
     "node": ">=18.0.0"
   },

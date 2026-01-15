@@ -1,6 +1,6 @@
 # Frontend Starter (TypeScript + React + Vite)
 
-A minimal React + TypeScript + Vite starter for the CSC Junior SWE Take-Home Test.
+A minimal React + TypeScript + Vite starter for the Junior SWE Take-Home Test.
 
 ## Setup
 
