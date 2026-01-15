@@ -2,6 +2,8 @@
 
 A minimal React + TypeScript + Vite starter for the Junior SWE Take-Home Test.
 
+> **Task Checklist:** See the main [README.md](../../README.md) for a detailed checklist of all tasks with sub-items you can use to track your progress.
+
 ## Setup
 
 1. **Install dependencies:**
@@ -40,6 +42,7 @@ npm run preview
 - "In stock only" filter toggle
 - Add product form (name, price, inStock fields)
 - Wire up saved button to call API and update state
+- "Load more" button to fetch additional pages of products
 - Error handling UI improvements
 - Implement remaining API functions (createProduct, toggleSaved, deleteProduct)
 
@@ -95,7 +98,14 @@ src/
 - Add the returned product to the products list
 - Clear the form on successful submission
 
-### 4. Implement API Functions
+### 4. Load More Button
+- The API returns paginated results with a `hasMore` flag
+- Track the current page in state
+- Show a "Load more" button when `hasMore` is true
+- Fetch the next page and **append** to existing products (don't replace)
+- Hide the button when there are no more products
+
+### 5. Implement API Functions
 - `createProduct()` - POST to create new products
 - `toggleSaved()` - PATCH to toggle saved status
 - `deleteProduct()` - DELETE to remove products

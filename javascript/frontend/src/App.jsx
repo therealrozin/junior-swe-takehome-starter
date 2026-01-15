@@ -7,12 +7,16 @@ export function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(false);
 
   // TODO: Add state for search query
   // const [searchQuery, setSearchQuery] = useState('');
 
   // TODO: Add state for inStock filter
   // const [inStockOnly, setInStockOnly] = useState(false);
+
+  // TODO: Add state for current page (for "Load more" functionality)
+  // const [page, setPage] = useState(1);
 
   // Fetch initial products on component mount
   useEffect(() => {
@@ -21,7 +25,8 @@ export function App() {
         setLoading(true);
         setError(null);
         const data = await fetchProducts();
-        setProducts(data);
+        setProducts(data.products);
+        setHasMore(data.pagination.hasMore);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load products');
       } finally {
@@ -33,6 +38,7 @@ export function App() {
   }, []);
   // TODO: Add searchQuery and inStockOnly to dependency array
   // When they change, call fetchProducts with those parameters
+  // Remember to reset page to 1 when filters change
 
   const handleToggleSaved = async (productId) => {
     // TODO: Implement handleToggleSaved
@@ -49,6 +55,16 @@ export function App() {
     // Clear form if successful
     // Show error if request fails
     console.log('Add product:', { name, price, inStock });
+  };
+
+  const handleLoadMore = async () => {
+    // TODO: Implement handleLoadMore
+    // Increment page state
+    // Call fetchProducts with current filters and new page number
+    // APPEND new products to existing products (don't replace!)
+    // Update hasMore from response
+    // Handle loading state and errors
+    console.log('Load more clicked');
   };
 
   return (
@@ -109,6 +125,12 @@ export function App() {
             ))}
           </div>
         )}
+
+        {/* TODO: Add "Load more" button */}
+        {/* Show this button only when hasMore is true */}
+        {/* <button onClick={handleLoadMore} disabled={loading}>
+          Load more
+        </button> */}
       </main>
     </div>
   );

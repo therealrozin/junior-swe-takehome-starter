@@ -53,7 +53,7 @@ Both versions include the same features and follow the same patterns. The main d
 Each starter provides:
 
 ✅ **Complete Examples:**
-- One fully working API endpoint (GET with filtering)
+- One fully working API endpoint (GET with filtering and pagination)
 - One complete React component
 - One working API client function
 - One example test
@@ -61,26 +61,85 @@ Each starter provides:
 🔨 **Stubs with TODOs:**
 - POST, PATCH, DELETE endpoints (you implement)
 - Additional API functions (you implement)
-- UI features: search, filter, add product form (you implement)
+- UI features: search, filter, add product form, load more (you implement)
 - Error handling improvements (you can add)
 
-## Quick Reference
+## Task Checklist
 
-### Backend Tasks
-1. Implement POST, PATCH, DELETE endpoints
-2. Add validation for POST (name required, price positive)
-3. Write 2 more tests (you have 1 example)
+Track your progress with this checklist. All tasks are expected unless marked as stretch.
+
+### Backend API
+
+**POST /api/products** - Create new products
+- [ ] Accept `name`, `price`, `inStock` in request body
+- [ ] Validate: `name` is required and cannot be empty/whitespace
+- [ ] Validate: `price` must be a positive number
+- [ ] Auto-generate unique numeric `id`
+- [ ] Default `saved` to `false`
+- [ ] Return `201` with created product on success
+- [ ] Return `400` with error message on validation failure
+
+**PATCH /api/products/:id/saved** - Toggle saved status
+- [ ] Parse product ID from URL
+- [ ] Find product by ID
+- [ ] Flip the `saved` boolean
+- [ ] Return updated product on success
+- [ ] Return `404` if product not found
+
+**DELETE /api/products/:id** - Remove a product
+- [ ] Parse product ID from URL
+- [ ] Remove product from store
+- [ ] Return success message
+- [ ] Return `404` if product not found
+
+**Testing** - Add at least 2 tests
+- [ ] Test: POST validation rejects invalid input (empty name or negative price)
+- [ ] Test: One other meaningful case (toggle saved, delete, edge case, etc.)
 
 See `backend/README.md` for full API specifications.
 
-### Frontend Tasks
-1. Add search input that filters by product name
-2. Add "In stock only" toggle filter
-3. Implement the saved button functionality
-4. Create a form to add new products
-5. Improve error handling
+### Frontend UI
+
+**Search filter**
+- [ ] Add text input with local state
+- [ ] Pass search query to `fetchProducts()`
+- [ ] Include in `useEffect` dependency array
+
+**In-stock filter**
+- [ ] Add checkbox with local state
+- [ ] Pass `inStock` boolean to `fetchProducts()`
+- [ ] Include in `useEffect` dependency array
+
+**Add product form**
+- [ ] Form with `name`, `price`, `inStock` fields
+- [ ] Submit calls `createProduct()` API function
+- [ ] Add returned product to products state
+- [ ] Clear form on success
+- [ ] Display error on failure
+
+**Saved button**
+- [ ] Implement `handleToggleSaved` callback
+- [ ] Call `toggleSaved()` API function
+- [ ] Update product in local state on success
+- [ ] Display error on failure
+
+**Load more**
+- [ ] Track current page in state
+- [ ] Show "Load more" button when `hasMore` is true
+- [ ] Fetch next page and append to existing products
+- [ ] Hide button when no more products
+
+**API functions** (in `src/api/products.ts`)
+- [ ] `createProduct()` - POST request
+- [ ] `toggleSaved()` - PATCH request
+- [ ] `deleteProduct()` - DELETE request (for stretch task)
 
 See `frontend/README.md` for detailed feature descriptions.
+
+### Stretch (Optional)
+- [ ] Add delete button to ProductCard
+- [ ] Add loading indicator during API calls
+- [ ] Improve form validation feedback
 
 ## Directory Structure
 
@@ -122,12 +181,13 @@ const API_BASE = 'http://localhost:3000/api';
 
 ## Time Management
 
-The test is designed for 2-3 hours. Here's a suggested breakdown:
+The test is designed to take around 1.5 hours for core functionality. Taking up to 2-3 hours is perfectly fine if you want to be more thorough or explore edge cases.
 
-- **Setup & understanding** (15 min) - read the starters, understand the patterns
-- **Backend endpoints** (45-60 min) - implement POST, PATCH, DELETE, and tests
-- **Frontend features** (45-60 min) - search, filter, add product form
-- **Integration & polish** (30 min) - test together, fix issues, error handling
+Suggested breakdown:
+- **Setup & understanding** (10-15 min) - read the template code, understand the patterns
+- **Backend endpoints** (30-45 min) - implement POST, PATCH, DELETE, and tests
+- **Frontend features** (45-60 min) - search, filter, form, saved button, load more
+- **Integration & polish** (15-30 min) - test together, fix issues, error handling
 
 Don't worry if you go over. Focus on core functionality and clear thinking.
 
@@ -141,6 +201,17 @@ Refer to:
 
 ---
 
+## Submission Templates
+
+This repository includes templates to help you structure your submission:
+
+- **`REFLECTION_TEMPLATE.md`** - Copy this file, fill it in, and rename it to `REFLECTION.md` in your submission
+- **`AI_USAGE_TEMPLATE.md`** - (Optional but encouraged) Copy this file, fill it in, and rename it to `AI_USAGE.md` in your submission if you used AI tools like ChatGPT or Copilot
+
+Using AI tools is fine and expected. We care that you understand your code and can explain what the tools helped with.
+
+---
+
 ## About This Repository
 
 This starter kit is designed to help candidates focus on implementation and problem-solving rather than project setup. It includes:
@@ -149,5 +220,6 @@ This starter kit is designed to help candidates focus on implementation and prob
 - Clear TODOs marking what needs to be implemented
 - Test infrastructure ready to use
 - Development servers pre-configured
+- Submission templates for reflection and AI usage
 
 Good luck! Focus on core functionality and clear thinking.

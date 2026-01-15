@@ -1,13 +1,38 @@
 const API_BASE = 'http://localhost:3000/api';
 
 /**
- * Fetch products from the API with optional filtering
+ * @typedef {Object} Product
+ * @property {number} id
+ * @property {string} name
+ * @property {number} price
+ * @property {boolean} inStock
+ * @property {boolean} saved
+ */
+
+/**
+ * @typedef {Object} Pagination
+ * @property {number} page
+ * @property {number} limit
+ * @property {number} total
+ * @property {number} totalPages
+ * @property {boolean} hasMore
+ */
+
+/**
+ * @typedef {Object} PaginatedResponse
+ * @property {Product[]} products
+ * @property {Pagination} pagination
+ */
+
+/**
+ * Fetch products from the API with optional filtering and pagination
  *
  * @param {string} [query] - Optional substring to filter by product name
  * @param {boolean} [inStock] - Optional boolean to filter by stock status
- * @returns {Promise<Array>} Promise resolving to array of products
+ * @param {number} [page] - Optional page number (defaults to 1)
+ * @returns {Promise<PaginatedResponse>} Promise resolving to paginated response
  */
-export async function fetchProducts(query, inStock) {
+export async function fetchProducts(query, inStock, page) {
   const params = new URLSearchParams();
 
   if (query) {
@@ -16,6 +41,10 @@ export async function fetchProducts(query, inStock) {
 
   if (inStock !== undefined) {
     params.append('inStock', String(inStock));
+  }
+
+  if (page !== undefined) {
+    params.append('page', String(page));
   }
 
   const url =

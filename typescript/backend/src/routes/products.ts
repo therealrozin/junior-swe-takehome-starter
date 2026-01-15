@@ -1,21 +1,34 @@
 import { Router, Request, Response } from 'express';
 import { products, getNextId } from '../data/store.js';
-import { Product } from '../types/Product.js';
+import { Product, PaginatedResponse } from '../types/Product.js';
 
 const router = Router();
 
 /**
  * GET /api/products
- * Returns a list of products with optional filtering
+ * Returns a paginated list of products with optional filtering
  *
  * Query parameters:
  * - query: string (optional) - Filter by name substring, case-insensitive
  * - inStock: boolean (optional) - Filter by inStock status
+ * - page: number (optional) - Page number, defaults to 1
+ * - limit: number (optional) - Items per page, defaults to 10, max 100
  *
  * Results are sorted by id ascending
  */
 router.get('/', (req: Request, res: Response) => {
   const { query, inStock } = req.query;
+
+  // Parse pagination params with defaults and bounds
+  let page = parseInt(req.query.page as string) || 1;
+  let limit = parseInt(req.query.limit as string) || 10;
+
+  // Ensure page is at least 1
+  if (page < 1) page = 1;
+
+  // Ensure limit is between 1 and 100
+  if (limit < 1) limit = 10;
+  if (limit > 100) limit = 100;
 
   let filtered = [...products]; // Create a copy to avoid modifying original
 
@@ -35,7 +48,26 @@ router.get('/', (req: Request, res: Response) => {
   // Sort by id ascending
   filtered.sort((a, b) => a.id - b.id);
 
-  res.json(filtered);
+  // Calculate pagination
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / limit);
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedProducts = filtered.slice(startIndex, endIndex);
+  const hasMore = page < totalPages;
+
+  const response: PaginatedResponse = {
+    products: paginatedProducts,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages,
+      hasMore,
+    },
+  };
+
+  res.json(response);
 });
 
 /**

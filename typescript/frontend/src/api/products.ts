@@ -1,18 +1,20 @@
-import { Product } from '../types/Product.js';
+import { Product, PaginatedResponse } from '../types/Product.js';
 
 const API_BASE = 'http://localhost:3000/api';
 
 /**
- * Fetch products from the API with optional filtering
+ * Fetch products from the API with optional filtering and pagination
  *
  * @param query - Optional substring to filter by product name
  * @param inStock - Optional boolean to filter by stock status
- * @returns Promise resolving to array of products
+ * @param page - Optional page number (defaults to 1)
+ * @returns Promise resolving to paginated response with products and pagination info
  */
 export async function fetchProducts(
   query?: string,
-  inStock?: boolean
-): Promise<Product[]> {
+  inStock?: boolean,
+  page?: number
+): Promise<PaginatedResponse> {
   const params = new URLSearchParams();
 
   if (query) {
@@ -21,6 +23,10 @@ export async function fetchProducts(
 
   if (inStock !== undefined) {
     params.append('inStock', String(inStock));
+  }
+
+  if (page !== undefined) {
+    params.append('page', String(page));
   }
 
   const url =

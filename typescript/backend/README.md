@@ -2,6 +2,8 @@
 
 A minimal Node.js + Express + TypeScript starter for the Junior SWE Take-Home Test.
 
+> **Task Checklist:** See the main [README.md](../../README.md) for a detailed checklist of all tasks with sub-items you can use to track your progress.
+
 ## Setup
 
 1. **Install dependencies:**
@@ -43,16 +45,21 @@ npm run test:watch
 ## API Endpoints Reference
 
 ### GET /api/products
-Returns a list of products with optional filtering
+Returns a paginated list of products with optional filtering
 
 **Query parameters:**
 - `query` (optional): Filter by product name (case-insensitive substring match)
 - `inStock` (optional): Filter by stock status (`true` or `false`)
+- `page` (optional): Page number, defaults to 1
+- `limit` (optional): Items per page, defaults to 10, maximum 100
 
 **Example requests:**
 ```bash
-# Get all products
+# Get first page of products
 curl http://localhost:3000/api/products
+
+# Get second page
+curl "http://localhost:3000/api/products?page=2"
 
 # Filter by name
 curl "http://localhost:3000/api/products?query=shirt"
@@ -60,21 +67,30 @@ curl "http://localhost:3000/api/products?query=shirt"
 # Filter by inStock
 curl "http://localhost:3000/api/products?inStock=true"
 
-# Combine filters
-curl "http://localhost:3000/api/products?query=shirt&inStock=true"
+# Combine filters with pagination
+curl "http://localhost:3000/api/products?query=shirt&inStock=true&page=1&limit=5"
 ```
 
 **Response:**
 ```json
-[
-  {
-    "id": 1,
-    "name": "Blue T-Shirt",
-    "price": 19.99,
-    "inStock": true,
-    "saved": false
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Blue T-Shirt",
+      "price": 19.99,
+      "inStock": true,
+      "saved": false
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 15,
+    "totalPages": 2,
+    "hasMore": true
   }
-]
+}
 ```
 
 ### POST /api/products

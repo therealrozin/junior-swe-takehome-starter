@@ -54,18 +54,69 @@ describe('GET /api/products', () => {
     );
   });
 
-  // TODO: Add at least 2 more tests
-  // - One for validation (e.g., what happens with invalid input)
-  // - One for edge cases (e.g., inStock filtering with no results, empty query)
+  it('should paginate results correctly', () => {
+    // Test pagination logic
+    const page = 1;
+    const limit = 2;
+    const total = products.length;
+    const totalPages = Math.ceil(total / limit);
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedProducts = products.slice(startIndex, endIndex);
+
+    // Page 1 with limit 2 should return first 2 products
+    expect(paginatedProducts).toHaveLength(2);
+    expect(paginatedProducts[0].id).toBe(1);
+    expect(paginatedProducts[1].id).toBe(2);
+
+    // Check pagination metadata
+    expect(total).toBe(3);
+    expect(totalPages).toBe(2);
+    expect(page < totalPages).toBe(true); // hasMore
+  });
+
+  // ============================================================
+  // TODO: Add at least 2 more tests for YOUR implementations
+  // ============================================================
   //
-  // Example:
-  // it('should return empty array when query matches no products', () => {
-  //   const query = 'nonexistent';
-  //   // ... your test
-  // });
+  // The examples above test code that's already implemented for you.
+  // Your tests should cover the endpoints YOU implement.
   //
-  // it('should filter by inStock parameter', () => {
-  //   // Test that inStock=true only returns in-stock items
-  //   // ... your test
-  // });
+  // IDEAS FOR WHAT TO TEST:
+  //
+  // POST /api/products (validation):
+  //   - What happens when name is empty or whitespace?
+  //   - What happens when price is negative or zero?
+  //   - Does a valid product get created correctly?
+  //
+  // PATCH /api/products/:id/saved:
+  //   - Does toggling saved work correctly?
+  //   - What happens when the product ID doesn't exist?
+  //
+  // DELETE /api/products/:id:
+  //   - Does deleting a product remove it?
+  //   - What happens when the product ID doesn't exist?
+  //
+  // Pagination edge cases:
+  //   - What if page exceeds total pages?
+  //   - What if page is 0 or negative?
+  //
+  // ------------------------------------------------------------
+  // ANY OF THESE TESTING APPROACHES ARE ACCEPTABLE:
+  // ------------------------------------------------------------
+  //
+  // 1. Unit tests of logic/validation (like the examples above)
+  //    - Test filtering, validation rules, pagination math directly
+  //    - Extract helper functions and test them
+  //
+  // 2. Handler-level tests
+  //    - Import route handlers and test them with mock req/res
+  //
+  // 3. Endpoint tests with supertest (bonus, not required)
+  //    - Full HTTP integration tests
+  //
+  // We care about your THINKING behind test selection, not the
+  // specific technique. Pick the approach you're comfortable with.
+  // ------------------------------------------------------------
 });
